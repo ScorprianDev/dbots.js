@@ -2,33 +2,33 @@ import { Service, ServicePostOptions } from '../Service'
 import { Util, IDResolvable } from '../../Utils/Util'
 
 /**
- * Represents the Radar Bot Directory service.
- * @see https://docs.radarbotdirectory.xyz/
+ * Represents the Radarcord service.
+ * @see https://docs.radarcord.net/
  */
-export default class RadarBotDirectory extends Service {
+export default class Radarcord extends Service {
   /** The values that can be used to select the service. */
   static get aliases() {
-    return ['radar', 'radarbots', 'radarbotdirectory.xyz']
+    return ['radar', 'radarcord', 'radarcord.net']
   }
 
   /** The logo URL. */
   static get logoURL() {
-    return 'https://theoverlook.xyz/Images/RBD/botlistlogo.png'
+    return 'https://radarcord.net/static/logo.png'
   }
 
   /** Service's name. */
   static get serviceName() {
-    return 'Radar Bot Directory'
+    return 'Radarcord'
   }
 
   /** The website URL. */
   static get websiteURL() {
-    return 'https://radarbotdirectory.xyz'
+    return 'https://radarcord.net'
   }
 
   /** The base URL of the service's API. */
   static get baseURL() {
-    return 'https://radarbotdirectory.xyz/api'
+    return 'https://radarcord.net/api'
   }
 
   /**
@@ -38,7 +38,7 @@ export default class RadarBotDirectory extends Service {
   static post(options: ServicePostOptions) {
     const { token, clientID, serverCount, shard } = options
     return super._post({
-      method: 'patch',
+      method: 'post',
       url: `/bot/${Util.resolveID(clientID)}/stats/`,
       headers: { Authorization: token },
       data: shard
@@ -63,15 +63,37 @@ export default class RadarBotDirectory extends Service {
    * @param botID The bot's ID
    * @param userID The user's ID
    */
-  getBotVotes(botID: IDResolvable, userID: IDResolvable) {
-    return this._request(
-      {
-        url: `/lastvoted/${Util.resolveID(userID)}/${Util.resolveID(botID)}`,
-        headers: { Authorization: this.token }
-      },
-      {
-        requiresToken: true
-      }
-    )
+  /**
+   * Returns username, ID and bots listed on website of user
+   * @param id The user's ID
+   */
+  getUser(id: IDResolvable) {
+    return this._request({ url: `/user/${Util.resolveID(id)}` })
+  }
+  
+  /**
+   * Returns username, ID and bots listed on website of user
+   * @param id The bot's ID
+   */
+  getReviews(id: IDResolvable) {
+    return this._request({ url: `/bot/${Util.resolveID(id)}/reviews` })
+  }
+  
+  /**
+   * Returns username, ID and bots listed on website of user
+   * @param botid The bot's ID
+   * @param userid The User's ID
+   */
+  lastVoted(botid: IDResolvable, userid: IDResolvable) {
+    return this._request({ url: `/lastvoted/${Util.resolveID(userid)}/${Util.resolveID(botid)` })
+  }
+  
+  /**
+   * Returns username, ID and bots listed on website of user
+   * @param botid The bot's ID
+   * @param userid The User's ID   
+   */
+  hasVoted(botid: IDResolvable, userid: IDResolvable) {
+    return this._request({ url: `/hasvoted/${Util.resolveID(userid)}/${Util.resolveID(botid)` })
   }
 }
