@@ -39,7 +39,7 @@ export default class Radarcord extends Service {
     const { token, clientID, serverCount, shard } = options
     return super._post({
       method: 'post',
-      url: `/bot/${Util.resolveID(clientID)}/stats/`,
+      url: `/bot/${Util.resolveID(clientID)}/stats`,
       headers: { Authorization: token },
       data: shard
         ? {
@@ -58,42 +58,4 @@ export default class Radarcord extends Service {
     return this._request({ url: `/bot/${Util.resolveID(id)}` })
   }
 
-  /**
-   * Gets the Unix Epoch Timestamp of the last time this user voted for this bot on this service.
-   * @param botID The bot's ID
-   * @param userID The user's ID
-   */
-  /**
-   * Returns username, ID and bots listed on website of user
-   * @param id The user's ID
-   */
-  getUser(id: IDResolvable) {
-    return this._request({ url: `/user/${Util.resolveID(id)}` })
-  }
-  
-  /**
-   * Returns username, ID and bots listed on website of user
-   * @param id The bot's ID
-   */
-  getReviews(id: IDResolvable) {
-    return this._request({ url: `/bot/${Util.resolveID(id)}/reviews` })
-  }
-  
-  /**
-   * Returns username, ID and bots listed on website of user
-   * @param botid The bot's ID
-   * @param userid The User's ID
-   */
-  lastVoted(botid: IDResolvable, userid: IDResolvable) {
-    return this._request({ url: `/lastvoted/${Util.resolveID(userid)}/${Util.resolveID(botid)` })
-  }
-  
-  /**
-   * Returns username, ID and bots listed on website of user
-   * @param botid The bot's ID
-   * @param userid The User's ID   
-   */
-  hasVoted(botid: IDResolvable, userid: IDResolvable) {
-    return this._request({ url: `/hasvoted/${Util.resolveID(userid)}/${Util.resolveID(botid)` })
-  }
 }
